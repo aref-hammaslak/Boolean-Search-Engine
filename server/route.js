@@ -1,9 +1,9 @@
 import express from 'express';
-import { searchExpresion } from './controllers/search.controller';
+import { getAllComments, getCommentsCount } from './controllers/comments.controller.js';
 
 export const router = express.Router();
 
 
 
-
-router.get('comments/search', searchExpresion);
+router.get('/comments',getAllComments)
+router.get('/comments/count', getCommentsCount)

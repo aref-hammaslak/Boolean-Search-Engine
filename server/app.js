@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import express from 'express';
-import { router } from './route';
+import { router } from './route.js';
 const app = express();
 
 // Middleware
@@ -17,7 +17,7 @@ await mongoose.connect(dbURI);
 app.get('/', (req, res) => {
     res.send('Hello, Express and MongoDB!');
 });
-app.use('api', router);
+app.use('/api', router);
 
 // Start server
 const PORT = process.env.PORT || 3000;

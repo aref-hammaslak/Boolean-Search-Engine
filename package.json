@@ -1,9 +1,12 @@
 {
   "name": "word-search-engine",
+  "type": "module",
   "version": "1.0.0",
   "description": "The fullstack app using Node.js and React.js to search a boolean exprsion of words in the Digikal comments dataset",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Aref Hammaslak",
