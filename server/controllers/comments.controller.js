@@ -1,6 +1,7 @@
 import { Parser } from "expr-eval";
 import { CommentModel } from "../models/comment.model.js";
 import { WordModel } from "../models/word.model.js";
+import { Query } from "mongoose";
 
 function evaluateExpression(expression, variables, wholeSet) {
     
@@ -50,7 +51,6 @@ export async function getAllComments(req, res) {
     
     
     const [wordsExpression, variables] = substitueWordsWithVariables(expression)
-    console.log("🚀 ~ getAllComments ~ wordsExpression, variables:", wordsExpression, variables)
 
 
     try {
@@ -59,28 +59,25 @@ export async function getAllComments(req, res) {
 
         for (let [variable, word] of variables) {
             word = word.trim();
-            const { presentAt } = await WordModel.findOne({ word });
-            variablesWithData[variable.trim()] = presentAt || [];
+            let item = await WordModel.findOne({ word }) || undefined ;
+            variablesWithData[variable.trim()] = item?.presentAt || [];
         }
 
         
-        const allCommentIds = (await CommentModel.find({}).select('_id')).map(doc => doc._id);
+        const allCommentIds = expression.length && (await CommentModel.find({}).select('_id')).map(doc => doc._id);
 
         // each var is a set of commentIds and wordsExpression is an boolean expresion of vaiables
-        const commentIds = evaluateExpression(wordsExpression, variablesWithData, allCommentIds);
+        const commentIds = expression.length && evaluateExpression(wordsExpression, variablesWithData, allCommentIds);
 
-        const comments = await CommentModel.find({
+        const query = expression.length === 0 ? {} : {
             _id: {
                 $in: commentIds
             }
-        }).skip(limit*page).limit(10);
+        }
+        const comments = await CommentModel.find(expression.length === 0 ? {} : query).skip(limit*page).limit(10);
 
         // get count of comments matchig with existance of words
-        const commentsCounts = await CommentModel.countDocuments({
-            _id: {
-                $in: commentIds
-            }
-        })
+        const commentsCounts = await CommentModel.countDocuments(query)
 
         res.send({
             success: true,
@@ -92,6 +89,7 @@ export async function getAllComments(req, res) {
             }
         })
     } catch (error) {
+        console.log(error);
         res.status(500).send({
             success: false,
             error: error.message

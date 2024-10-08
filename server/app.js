@@ -1,8 +1,11 @@
 import mongoose from 'mongoose';
 import express from 'express';
 import { router } from './route.js';
-const app = express();
+import cors from 'cors';
 
+
+const app = express();
+app.use(cors());
 // Middleware
 app.use(express.json());
 

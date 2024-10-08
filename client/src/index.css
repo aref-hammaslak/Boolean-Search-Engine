@@ -1,0 +1,9 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:Root{
+    font-famitly: "Roboto" system-ui;
+    font-weight: 400,
+}
