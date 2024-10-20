@@ -1,1 +1,1 @@
-The fullstack app using Node.js and React.js to search a boolean exprsion of words in the Digikal comments dataset.
+A boolean search engine on the Digikal comments dataset using Node.js for the backend and React.js for the frontend.
