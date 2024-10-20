@@ -23,11 +23,8 @@ function App() {
 
   const {
     data: { comments, total },
-    isLoading,
-    isPending,
     isFetching,
     error,
-    isSuccess
   } = useQuery({
     queryKey: ["commments", page, searchExpresion],
     queryFn: async () => {

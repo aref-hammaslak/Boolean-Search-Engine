@@ -1,5 +1,5 @@
 {
-  "name": "word-search-engine",
+  "name": "boolean-search-engine",
   "type": "module",
   "version": "1.0.0",
   "description": "The fullstack app using Node.js and React.js to search a boolean exprsion of words in the Digikal comments dataset",
